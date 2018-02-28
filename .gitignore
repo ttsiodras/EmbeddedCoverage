@@ -1,0 +1,11 @@
+bin.*
+objs.*
+deps.*
+coverage.info
+coverage
+.gdb_history
+contrib/coverage.gdb
+**/*.swp
+contrib/measure_l4stat.gdb
+contrib/measure_l4stat_EDISOFT.gdb
+contrib/measure_tsim.gdb

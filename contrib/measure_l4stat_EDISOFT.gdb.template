@@ -1,0 +1,22 @@
+tar extended-remote :1324
+load bin.debug.leon3.EDISOFT/fputest
+monitor reset
+b task1.c:LINEC
+commands 1
+    silent
+    monitor l4stat 0 set 0 0 time
+    monitor l4stat 0 clear 0
+    c
+end
+b task1.c:LINEE
+commands 2
+    silent
+    echo =============================================================\n
+    echo Per L4STAT, inner loop lasted for...\n
+    monitor l4stat 0 status
+    echo  (see the line with the execution time - in 200MHz ticks)\n
+    echo =============================================================\n
+    c
+end
+c
+q

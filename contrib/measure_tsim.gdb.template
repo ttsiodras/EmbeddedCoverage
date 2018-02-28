@@ -1,0 +1,20 @@
+tar extended-remote :1234
+load bin.debug.leon2.OAR/fputest
+b task1.c:LINEC
+commands 1
+    silent
+    monitor perf reset
+    c
+end
+b task1.c:LINED
+commands 2
+    silent
+    echo =============================================================\n
+    echo Per TSIM, inner loop lasted for...\n
+    monitor perf
+    echo  (see the line with the cycles - in 50MHz ticks)\n
+    echo =============================================================\n
+    c
+end
+c
+q

@@ -1,0 +1,44 @@
+file bin.SUFFIX/fputest
+tar extended-remote 127.0.0.1:9976
+load bin.SUFFIX/fputest
+
+# The coverage exporting to the host
+b gcov_hooks.c:LINEA
+commands 1
+    silent
+    set $filename = tmp->info->filename
+    set $dataBegin = buffer
+    set $dataEnd = buffer + bytesNeeded
+    eval "dump binary memory %s 0x%lx 0x%lx", $filename, $dataBegin, $dataEnd
+    echo dump binary memory $filename $dataBegin $dataEnd
+    echo \n
+    c
+end
+b gcov_hooks.c:LINEB
+commands 2
+    silent
+    stop
+    monitor quit
+    set confirm off
+    quit
+end
+b task1
+commands 3
+    silent
+    echo task1 running now...\n
+    c
+end
+b task2
+commands 4
+    silent
+    echo task2 running now...\n
+    c
+end
+b __gcov_exit
+commands 5
+    silent
+    echo Collecting coverage info...\n
+    c
+end
+echo Binary now running under GDB... Please wait for it to finish...\n
+c

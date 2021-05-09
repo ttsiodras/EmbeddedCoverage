@@ -79,6 +79,7 @@ void *malloc(unsigned size)
     if (size<available) {
         void *ret = &pseudoHeap[offset];
         offset += size;
+        available -= size;
         memset(ret, 0, size);
         return ret;
     } else
